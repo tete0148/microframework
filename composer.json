@@ -1,0 +1,21 @@
+{
+    "name": "tete0148/microframework",
+    "description": "My personal PHP microframework based on Slim",
+    "type": "project",
+    "require": {
+        "slim/slim": "^3.5",
+        "slim/twig-view": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app"
+        }
+    },
+    "authors": [
+        {
+            "name": "Theo",
+            "email": "theoc.01@live.fr"
+        }
+    ],
+    "minimum-stability": "stable"
+}
