@@ -10,11 +10,13 @@ $pdo = NULL;
 $getPDO = function () use ($pdo, $config) {
     if(is_null($pdo))
         try {
-            $pdo = new PDO("mysql:host={$config['database']['HOST']};dbname={$config['database']['DB_NAME']}", $config['database']['USER'], $config['database']['PASSWORD']);
+            $informations = "mysql:host={$config['database']['HOST']};dbname={$config['database']['DB_NAME']}";
+            $pdo = new PDO($informations, $config['database']['USER'], $config['database']['PASSWORD']);
             $pdo->exec('SET NAMES UTF-8');
         } catch (PDOException $e) {
-            if (!PROD) die('Enable to connect to the database');
+            if (!PROD) die($e->getMessage());
         }
+    return $pdo;
 };
 
 $configuration = [
@@ -27,7 +29,7 @@ $configuration = [
 $container = new Slim\Container($configuration);
 
 $container['dao.users'] = function() use ($getPDO) {
-    return new UserDAO($getPDO);
+    return new UserDAO($getPDO());
 };
 
 $container['view'] = function($container) use($config) {
@@ -50,7 +52,7 @@ $app = new \Slim\App($container);
 function c($string)
 {
     $string = explode('::', $string);
-    $rtrn = "App\\Controllers\\" . $string[0] . 'Controller:' . ((isset($string[1])) ? 'index' : $string[1]);
+    $rtrn = "App\\Controllers\\" . $string[0] . 'Controller:' . ((!isset($string[1])) ? 'index' : $string[1]);
     return $rtrn;
 }
 
