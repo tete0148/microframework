@@ -3,8 +3,8 @@
 namespace App\DAO;
 
 
-use tete0148\App\Models\AbstractModel;
-use tete0148\App\Models\User;
+use App\Models\User;
+use App\Models\AbstractModel;
 
 class UserDAO extends DAO {
 
@@ -20,6 +20,45 @@ class UserDAO extends DAO {
 
         return $this->buildDomainObject($row);
     }
+
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        $query = $this->getPDO()->query('SELECT * FROM users');
+        $rows = $query->fetchAll();
+        $users = [];
+        foreach($rows as $row)
+            $users[] = $this->buildDomainObject($row);
+
+        return $users;
+    }
+
+    /**
+     * Save an user into the database
+     *
+     * @param $user User
+     */
+    public function save($user)
+    {
+        if($user->getId() == NULL) {
+            $sql = 'INSERT INTO users VALUES(?,?,?,?,?,?,?,?,?)';
+            $statement = $this->getPDO()->prepare($sql);
+            $statement->execute([
+                $user->getId(),
+                $user->getLname(),
+                $user->getFname(),
+                $user->getEmail(),
+                $user->getPseudo(),
+                $user->getPassword(),
+                $user->getPasswordSalt(),
+                $user->getCreatedAt(),
+                $user->getUpdatedAt()
+            ]);
+        }
+    }
+
     /**
      * @param array $row
      * @return AbstractModel
@@ -31,7 +70,7 @@ class UserDAO extends DAO {
         $user->setFname($row['fname']);
         $user->setLname($row['lname']);
         $user->setEmail($row['email']);
-        $user->setPseudo(['pseudo']);
+        $user->setPseudo($row['pseudo']);
         $user->setPassword($row['password']);
         $user->setPasswordSalt($row['password_salt']);
         $user->setCreatedAt($row['created_at']);
