@@ -28,9 +28,8 @@ $configuration = [
 
 $container = new Slim\Container($configuration);
 
-$container['dao.users'] = function() use ($getPDO) {
-    return new UserDAO($getPDO());
-};
+require 'helpers.php';
+require 'dao.php';
 
 $container['view'] = function($container) use($config) {
     $view = new \Slim\Views\Twig($config['views_path'], [
