@@ -1,4 +1,6 @@
-git{% block title %} Utilisateurs {% endblock %}
+{% extends 'templates/layout.twig' %}
+
+{% block title %} Utilisateurs {% endblock %}
 
 {% block content %}
     {% for user in users %}
