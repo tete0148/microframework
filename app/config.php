@@ -13,9 +13,8 @@ $temp = explode(PHP_EOL, $env);
 $env = [];
 foreach($temp as $item) {
     $t = explode('=', $item);
-    $env[$t[0]] = $t[1];
+    $env[$t[0]] = trim($t[1]);
 }
-
 //creating config array
 $config = [
         'database' => [
