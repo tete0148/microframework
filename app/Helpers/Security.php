@@ -12,12 +12,12 @@ class Security
 
     public static function hash($toHash, $salt = '')
     {
-        return self::hash('sha256', self::$config['app_salt']) . $salt . $toHash . substr(self::$config['app_salt'] . $salt, 0, len(self::$config['app_salt'])/2);
+        return hash('sha256', self::$config['app_salt']) . $salt . $toHash . substr(self::$config['app_salt'] . $salt, 0, len(self::$config['app_salt'])/2);
     }
 
     public function checkHash($toCheck, $hash, $salt = '')
     {
-        return self::hash('sha256', self::$config['app_salt']) . $salt . $toCheck . substr(self::$config['app_salt'] . $salt, 0, len(self::$config['app_salt'])/2) === $hash;
+        return hash('sha256', self::$config['app_salt']) . $salt . $toCheck . substr(self::$config['app_salt'] . $salt, 0, len(self::$config['app_salt'])/2) === $hash;
     }
 
     public static function generateSalt()
