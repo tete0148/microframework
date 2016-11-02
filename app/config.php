@@ -23,6 +23,7 @@ $config = [
             'USER' => $env['DB_USER'],
             'PASSWORD' => $env['DB_PASSWORD'],
         ],
+        'app_salt' => $env['APP_SALT'],
         'views_path' => '../views',
         'cache_path' => '../cache'
     ];

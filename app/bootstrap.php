@@ -1,6 +1,7 @@
 <?php
 
 use App\DAO\UserDAO;
+use App\Helpers\Security;
 
 require '../vendor/autoload.php';
 require 'config.php';
@@ -47,6 +48,8 @@ $container['view'] = function($container) use($config) {
 
 $app = new \Slim\App($container);
 
+Security::setConfig($config);
+var_dump($config);
 //controller caller
 function c($string)
 {
