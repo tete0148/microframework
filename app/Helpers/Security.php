@@ -8,6 +8,8 @@ class Security
 
     private static $config = NULL;
 
+    private function __construct(){}
+
     public static function hash($toHash, $salt = '')
     {
         return self::hash('sha256', self::$config['app_salt']) . $salt . $toHash . substr(self::$config['app_salt'] . $salt, 0, len(self::$config['app_salt'])/2);
