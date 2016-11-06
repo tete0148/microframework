@@ -25,7 +25,9 @@ $config = [
         ],
         'app_salt' => $env['APP_SALT'],
         'views_path' => '../views',
-        'cache_path' => '../cache'
+        'cache_path' => '../cache',
+        'assets_root' => '/microframework/public/',
+        'userSessionUpdateInterval' => 30, //secondes
     ];
 if(PROD) {
 
