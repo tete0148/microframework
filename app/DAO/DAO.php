@@ -4,6 +4,7 @@ namespace App\DAO;
 
 use \PDO;
 use App\Models\AbstractModel;
+use Slim\Container;
 
 abstract class DAO {
 
@@ -11,14 +12,20 @@ abstract class DAO {
      * @var PDO
      */
     private $pdo;
+    /**
+     * @var Container
+     */
+    private $container;
 
     /**
      * DAO constructor.
+     * @param Container $container
      * @param PDO $pdo
      */
-    public function __construct(PDO $pdo)
+    public function __construct(Container $container, PDO $pdo)
     {
         $this->pdo = $pdo;
+        $this->container = $container;
     }
 
     /**
@@ -29,9 +36,14 @@ abstract class DAO {
         return $this->pdo;
     }
 
+    protected function getContainer()
+    {
+        return $this->container;
+    }
+
     /**
      * @param array $row
      * @return AbstractModel
      */
-    abstract function buildDomainObject(array $row);
+    abstract public function buildDomainObject(array $row);
 }
